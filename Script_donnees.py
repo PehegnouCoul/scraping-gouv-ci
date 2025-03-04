@@ -27,17 +27,17 @@ def extract_content(url):
         
         
         mots_cles = [
-            'mission', 'vision', 'organigramme',  # Présentation de l'entité
-            'adresse', 'téléphone', 'email', 'contact',  # Contacts
-            'loi', 'décret', 'arrêté', 'document réglementaire',  # Documents réglementaires
-            'rapport d\'activité', 'rapport annuel',  # Rapports d'activités
-            'prestation', 'service', 'formulaire', 'demande administrative',  # Prestations et services
-            'accessibilité', 'handicap', 'ergonomie', 'langue simple',  # Accessibilité
-            'actualité', 'news', 'nouvelle'  # Actualités
+            'mission', 'vision', 'organigramme','organisation', 'mécanismes', 'Les programmes de santé publique',  # Présentation de l'entité
+            'adresse', 'téléphone', 'email', 'contact','parcours patien', '' 
+            'loi', 'décret', 'arrêté', 'document réglementaire', 
+            'rapport d\'activité', 'rapport annuel', 
+            'prestation', 'service', 'formulaire', 'demande administrative',
+            'accessibilité', 'handicap', 'ergonomie', 'langue simple', 'politiques',
+            'actualité', 'news', 'nouvelle', 'localisation','modalités d’accès', 'coûts', 'objectif'
         ]
         
         
-        balises_analyser = ['div', 'p', 'section', 'article', 'li', 'a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']
+        balises_analyser = ['div', 'p', 'section', 'article', 'li', 'a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6','ul','li','ol','textarea','footer','main']
         
         
         for balise in balises_analyser:
@@ -46,22 +46,22 @@ def extract_content(url):
             for element in elements:
                 
                 texte = element.get_text(strip=True)
+               
                 
-               # Vérifier si le texte contient un mot-clé
                 for mot_cle in mots_cles:
                     if mot_cle.lower() in texte.lower():
-                        # Éviter les doublons
+                        
                         if texte not in seen_texts:
                             seen_texts.add(texte)
                             
-                            # Récupérer le lien associé (si disponible)
+                            
                             lien_associe = ""
                             if element.name == 'a' and element.get('href'):
                                 lien_associe = urljoin(url, element.get('href'))
                             elif element.find_parent('a') and element.find_parent('a').get('href'):
                                 lien_associe = urljoin(url, element.find_parent('a').get('href'))
                             
-                            # Ajouter les informations à la liste des données
+                            
                             data.append({
                                 'Nom du site': nom_site,
                                 'Heure': heure_extraction,
@@ -92,4 +92,4 @@ print("Données extraites :")
 print(df)
 df.to_excel('donnees.xlsx', index=False)
 
-print("Extraction terminée. Les données sont stockées dans un DataFrame Pandas.")
+print("Extraction terminée. Les données sont stockées dans un DataFrame Pandas et téléchargé dans un fichier Excel.")
