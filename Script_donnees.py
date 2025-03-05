@@ -84,7 +84,7 @@ def extract_content(url):
     
     return data
 
-def save_to_excel(data, filename='donnees.xlsx'):
+def save_to_excel(data, filename='sante.xlsx'):
     """Sauvegarde les données extraites dans un fichier Excel."""
     if data:
         df = pd.DataFrame(data)
@@ -94,7 +94,7 @@ def save_to_excel(data, filename='donnees.xlsx'):
         print("Aucune donnée extraite.")
 
 # URL de départ
-base_url = "https://www.gouv.ci/Main2.php"
+base_url =  "https://web.sante.gouv.ci/accueil"
 
 print("Récupération des URLs...")
 urls = get_all_links(base_url)
